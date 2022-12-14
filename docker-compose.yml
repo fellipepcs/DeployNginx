@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+  simiptu-backend:
+    image: sistopocart/simiptu-backend
+    hostname: backend
+    environment:
+      - DATABASE_NAME=rio_branco
+      - DATABASE_USER=simulacao_apl
+      - DATABASE_PASSWORD=apl321
+      - DATABASE_HOST=topocart.geo360.com.br
+      - DATABASE_PORT=5432
+    expose:
+      - 8000
+
+  simiptu-frontend:
+    build: ./simiptu-frontend
+    container_name: frontend
+    ports:
+      - 80
+
+  nginx-proxy:
+    image: nginx
+    hostname: nginx
+    ports:
+      - 82:80
+    volumes:
+      - "./nginx/nginx.conf:/etc/nginx/conf.d/default.conf"
+
